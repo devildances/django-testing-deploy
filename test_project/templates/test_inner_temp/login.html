@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% block body_block %}
+    <div class="jumbotron">
+        <h1>Please Login here :</h1>
+        <form action="{% url 'test_app:login' %}" method="POST">
+            {% csrf_token %}
+            <label for="username">Username : </label>
+            <input type="text" name="uname" placeholder="input username here">
+            <label for="password">Password : </label>
+            <input type="password" name="pwd">
+            <input type="submit" value="login">
+        </form>
+    </div>
+    {% endblock body_block %}

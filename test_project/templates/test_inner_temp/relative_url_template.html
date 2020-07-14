@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% block body_block %}
+    <a href="{% url 'admin:index' %}">Admin Page</a>
+    <a href="{% url 'index' %}">Home Page</a>
+
+    <!-- these 3 are coming from urls.py in app folder -->
+    <a href="{% url 'test_app:faker' %}">Faker Page</a>
+    <a href="{% url 'test_app:forms_name' %}">Forms Page</a>
+    <a href="{% url 'test_app:relativeurl' %}">Relative URL Page</a>
+    {% endblock body_block %}

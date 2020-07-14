@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% block body_block %}
+    <div class="jumbotron">
+        {% if registered %}
+            <h1>Thank you for registering!</h1>
+        {% else %}
+            <h1>Register Here!</h1>
+            <h3>Fill out the form :</h3>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ UserProfile_Form.as_p }}
+                {{ UserProfile_Info.as_p }}
+                <input type="submit" value="register">
+            </form>
+        {% endif %}
+    </div>
+    {% endblock body_block %}

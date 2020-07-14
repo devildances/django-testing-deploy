@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% block body_block %}
+    <div class="tab_accrec">
+        {% if access_records %}
+            <table>
+                <thead>
+                    <th>Site Name</th>
+                    <th>Date Accessed</th>
+                </thead>
+                {% for i in access_records %}
+                    <tr>
+                        <td>{{ i.col_AccessRecord1 }}</td>
+                        <td>{{ i.col_AccessRecord2 }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>There is no record found!</p>
+        {% endif %}
+    </div>
+    {% endblock body_block %}

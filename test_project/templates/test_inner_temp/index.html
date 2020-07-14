@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% load static %}
+    {% block body_block %}
+    <h1>Test App run successfully! This is from test_inner_temp/index.html</h1>
+    <img src="{% static 'images/IMG-108.jpg' %}" alt="" width="700px" height="500px"><br><br>
+
+    <!-- this is code for Template Filter -->
+    {% load test_extras %}
+    <h3>without Template Filter : {{ text }}</h3>
+    <h3>with Template Filter(upper) : {{ text | upper }}</h3>
+    <h3>with custom Template Filter(custom_cut) : {{ text | cutting:'Fil' }}</h3>
+    <h3>without Template Filter : {{ number }}</h3>
+    <h3>with Template Filter(add) : {{ number | add:"99" }}</h3>
+    {% endblock body_block %}
