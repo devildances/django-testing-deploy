@@ -19,7 +19,8 @@ from test_app import views
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    # url(r'^$', views.index, name='index'),
+    url(r'^$', views.indexView.as_view(), name='index'),
     url(r'^training/', include('test_app.urls')),
     path('admin/', admin.site.urls),
     url(r'^logout/$', views.user_logout, name='logout'),

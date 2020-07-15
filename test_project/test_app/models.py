@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class table_topic(models.Model):
@@ -6,6 +7,14 @@ class table_topic(models.Model):
 
     def __str__(self):
         return self.col_topic1
+
+    def get_absolute_url(self):
+        '''
+        this function is used if we want
+        to do CRUD action with the table
+        '''
+        return reverse('test_app:create')
+
 
 class table_webpage(models.Model):
     col_webpage1 = models.ForeignKey(table_topic, on_delete=models.CASCADE)
@@ -15,12 +24,14 @@ class table_webpage(models.Model):
     def __str__(self):
         return self.col_webpage2
 
+
 class table_AccessRecord(models.Model):
-    col_AccessRecord1 = models.ForeignKey(table_webpage, on_delete=models.CASCADE)
+    col_AccessRecord1 = models.ForeignKey(table_webpage, related_name='accrec', on_delete=models.CASCADE)
     col_AccessRecord2 = models.DateField()
 
     def __str__(self):
         return str(self.col_AccessRecord2)
+
 
 # ======================= MODELS FOR FORMS ======================================
 
@@ -32,6 +43,7 @@ class table_User(models.Model):
 
     def __str__(self):
         return self.username
+
 
 # ======================= MODELS FOR USERPROFILE ======================================
 from django.contrib.auth.models import User

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from test_app.models import table_topic, table_webpage, table_AccessRecord # import table here
 from . import forms # import forms from forms.py
 from test_app.forms import newUserForm # import class from forms.py
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -110,3 +111,63 @@ def user_login(request):
 
     else:
         return render(request,'test_inner_temp/login.html', {})
+
+
+# ============================= CBV ====================================
+
+
+from django.views.generic import View, TemplateView, ListView, DetailView # CBV default method
+
+# class CBView(View):
+#     def get(self,request):
+#         dt = {'text':'TempFil', 'number':100}
+#         return render(request,'test_inner_temp/index.html',context=dt)
+
+class indexView(TemplateView):
+    template_name = 'test_inner_temp/index.html'
+    def get_context_data(self, **kwargs):
+        dt = super().get_context_data(**kwargs)
+        dt['text'] = 'TempFil'
+        dt['number'] = 200
+        return dt
+
+
+
+class fakerListView(ListView):
+    template_name = 'test_inner_temp/faker.html'
+    context_object_name = 'webpages'
+    model = table_webpage # OR queryset = table_webpage.objects.all()
+    # if we dont define context_object_name, ListView will return table_AccessRecord to
+    # HTML as table_AccessRecord + _list = table_AccessRecord_list automatically
+
+class fakerDetailView(DetailView):
+    context_object_name = 'webpages'
+    model = table_webpage
+    template_name = 'test_inner_temp/faker_CBV.html'
+
+
+# ============================== CRUD =============================================
+
+
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+class TopicCreateView(CreateView):
+    template_name = 'test_inner_temp/crud.html'
+    fields = ('col_topic1',)
+    model = table_topic
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ttopic'] = table_topic.objects.all()
+        return context
+
+class TopicUpdateView(UpdateView):
+    template_name = 'test_inner_temp/crud.html'
+    fields = ('col_topic1',)
+    model = table_topic
+
+class TopicDeleteView(DeleteView):
+    template_name = 'test_inner_temp/crud.html'
+    model = table_topic
+    success_url = reverse_lazy('test_app:create')

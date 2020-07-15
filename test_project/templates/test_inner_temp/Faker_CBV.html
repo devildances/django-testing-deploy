@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% block body_block %}
+        <div class="jumbotron">
+            {% for w in webpages.accrec.all %}
+                <p>{{w.col_AccessRecord2}}</p>
+            {% endfor %}
+        </div>
+    {% endblock body_block %}

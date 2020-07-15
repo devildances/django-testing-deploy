@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'test_inner_temp/base.html' %}
+    {% block body_block %}
+        <div class="jumbotron">
+            <h1>
+                {% if not form.instance.pk and not object %}
+                Create new topic
+                {% elif not form.instance.pk and object %}
+                Delete topic
+                {% else %}
+                Update topic
+                {% endif %}
+            </h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if not form.instance.pk and not object %}
+                    <input type="submit" class="btn btn-primary" value="submit">
+                {% elif not form.instance.pk and object %}
+                    <p><strong>{{object}}</strong> will be deleted from topic table</p><br>
+                    <input type="submit" class="btn btn-danger" value="delete">
+                    <a class="btn btn-warning" href="{% url 'test_app:create' %}">cancel</a>
+                {% else %}
+                    <input type="submit" class="btn btn-warning" value="update">
+                    <a class="btn btn-danger" href="{% url 'test_app:create' %}">cancel</a>
+                {% endif %}
+            </form>
+        </div>
+        <div class="container">
+            {% if ttopic %}
+                <table>
+                    <thead>
+                        <th>Topic</th>
+                        <th>Customize</th>
+                    </thead>
+                    {% for i in ttopic %}
+                        <tr>
+                            <td>{{i.col_topic1}}</td>
+                        <td>
+                            <a class="btn btn-success" href="{% url 'test_app:update' pk=i.pk %}">edit</a>
+                            <a class="btn btn-danger" href="{% url 'test_app:delete' pk=i.pk %}">delete</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    {% endblock body_block %}
